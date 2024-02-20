@@ -16,14 +16,14 @@ import SwiftUI
 import SpriteKit
 
 struct View8_FindEarth: View {
-    @Binding var showAsteroid: Bool?
-    @ObservedObject var scene = SpriteKitGameScene(size: CGSize(width: 500, height: 500))
+    @Binding var changeScene: Bool?
+    @ObservedObject var scene = SpriteKitGameScene()
     
     @State var screenSize: CGSize = .zero
     
     var body: some View {
             ZStack{
-                Color.clear
+                Color.blue
                     .ignoresSafeArea()
                 SpriteView(scene: scene, debugOptions: [.showsFPS, .showsNodeCount])
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -36,7 +36,7 @@ struct View8_FindEarth: View {
             }
             .onChange(of: scene.changeScene ){ value in
                 withAnimation {
-                    showAsteroid = value
+                    changeScene = value
                 }
             }
         }
@@ -44,7 +44,7 @@ struct View8_FindEarth: View {
 
 
 #Preview {
-    View8_FindEarth(showAsteroid: .constant(false))
+    View8_FindEarth(changeScene: .constant(false))
 }
 
 

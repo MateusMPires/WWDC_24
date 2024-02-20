@@ -12,7 +12,7 @@ import SceneKit
 class SpriteKitGameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
     
     // BACKGROUND
-    private var starsBackground = SKSpriteNode(imageNamed: "Space") // This is my background
+    private var starsBackground = SKSpriteNode(imageNamed: "StarsBackground2x") // This is my background
     
     // CAMERA
     private var cameraNode: SKCameraNode?
@@ -108,6 +108,8 @@ class SpriteKitGameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
         // Positioned at the center of View
         earth.position = CGPoint(x: frame.midX, y: frame.midY)
         
+        earth.viewportSize = CGSize(width: frame.width * 0.03, height: frame.height * 0.03)
+
         self.addChild(earth)
     }
     
@@ -121,7 +123,7 @@ class SpriteKitGameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
         // Add a scope to guide
         cameraIndicator.name = "cameraIndicator"
         cameraIndicator.zPosition = 2
-        //cameraNode?.addChild(cameraIndicator)
+        cameraIndicator.color = .red
         addChild(cameraIndicator)
         
         // Map limit - constraints
@@ -141,8 +143,8 @@ class SpriteKitGameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
     }
     
     func moveCamera(){
-        velocityX = motionVM.rotationRate.x * 7
-        velocityY = motionVM.rotationRate.y * 7
+        velocityX = motionVM.rotationValueX * 7
+        velocityY = motionVM.rotationValueY * 7
         
         camera?.position.y -= velocityY
         camera?.position.x -= velocityX

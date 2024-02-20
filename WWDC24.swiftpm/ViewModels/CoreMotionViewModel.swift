@@ -22,7 +22,7 @@ class CoreMotionViewModel: ObservableObject {
     private let rotationRateThreshold: Double = 2.956108801299706
     
     init() {
-        //startGiroscope()
+        startGiroscope()
     }
     
     func startGiroscope() {
