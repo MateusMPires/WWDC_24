@@ -23,7 +23,7 @@ struct View5: View {
                 Spacer()
                 
                 NavigationLink(destination: View6()) {
-                   ExploreButton()
+                   ExploreButton(buttonTitle: "Explore")
                         .frame(width: width * 0.2, height: height * 0.1, alignment: .center)
                         .frame(maxWidth: .infinity, alignment: .bottomTrailing)
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 60))

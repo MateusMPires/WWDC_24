@@ -34,9 +34,8 @@ struct View7: View {
                         
                     Spacer()
                     
-                            NavigationLink(destination: ZoomView()) {
-                                ExploreButton()
-                                    
+                            NavigationLink(destination: View9()) {
+                                ExploreButton(buttonTitle: "Take telescope")
                             }
                             //.offset(x: width * 0.3, y: -height * 0.5)
                             .frame(width: width * 0.2, height: height * 0.1, alignment: .center)

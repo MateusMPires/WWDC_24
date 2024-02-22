@@ -31,7 +31,7 @@ struct View6: View {
                 //.background(Color.red)
                     .overlay {
                         NavigationLink(destination: View7()) {
-                            ExploreButton()
+                            ExploreButton(buttonColor: .yellow, buttonTitle: "View from here")
                         }
                         .scaleEffect(0.7)
                         .offset(x: width * 0.35, y: height * 0.107)

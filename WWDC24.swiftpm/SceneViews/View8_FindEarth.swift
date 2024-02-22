@@ -30,6 +30,7 @@ struct View8_FindEarth: View {
                 View9()
             }
         }
+        .navigationBarBackButtonHidden()
         .getSize { size in
             screenSize = size
             // config scene

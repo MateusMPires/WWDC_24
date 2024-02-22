@@ -2,38 +2,45 @@
 //  SwiftUIView.swift
 //  
 //
-//  Created by Mateus Martins Pires on 04/02/24.
+//  Created by Mateus Martins Pires on 22/02/24.
 //
 
 import SwiftUI
 
 struct View11: View {
-    
     @State var isEndAnimation: Bool = false
     
     var body: some View {
         NavigationStack {
             VStack {
                 
-                Spacer()
-                HologramSpeaking(fullText1: "Maybe someone never contacted us because for THEM Earth hasn't even formed yet.", fullText2: "", isEndAnimation: $isEndAnimation)
+                Text("Let's take a look from another point")
+                    .font(FontManager.customFont(font: .orbitron, fontSize: .title))
+                //.background(Color.blue)
+                    .padding()
+                
                 Spacer()
                 
-//                if isEndAnimation {
-//                    NavigationLink(destination: View1()) {
-//                        Text("Finish")
-//                            .font(FontManager.customFont(font: .orbitron, fontSize: .regular))
-//                    }
-//                    .frame(maxWidth: .infinity, alignment: .bottomTrailing)
-//                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 60))
-                //} else {
-                    ArrowButton(destination: View5())
-                        .hidden()
-                //}
+                Image("UniverseMap")
+                    .resizable()
+                //.scaledToFit()
+                //.aspectRatio(contentMode: .fit)
+                    .frame(width: width * 0.8, height: height * 0.8)
+                    .scaleEffect(1.5)
+                //.background(Color.red)
+                    .overlay {
+                        NavigationLink(destination: ZoomView()) {
+                            ExploreButton(buttonColor: .blue, buttonTitle: "View from here")
+                        }
+                        .scaleEffect(0.7)
+                        .offset(x: width * 0.35, y: height * 0.107)
+                    }
+                
+                
             }
-            .background {
+            .background(content: {
                 Image("Background")
-            }
+            })
         }
         .navigationBarBackButtonHidden()
     }

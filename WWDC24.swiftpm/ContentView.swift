@@ -9,7 +9,7 @@ struct ContentView: View {
 
     
     var body: some View {
-        View8_FindEarth()
+        View1()
             .preferredColorScheme(.dark)
     }
         

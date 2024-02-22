@@ -69,7 +69,7 @@ struct ZoomView: View {
                 
                 Spacer()
                 
-                ArrowButton(destination: View9())
+                ArrowButton(destination: View12())
             }
             .navigationDestination(isPresented: $isZoomMaxed) {
                 View9()
