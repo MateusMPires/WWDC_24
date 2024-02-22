@@ -2,7 +2,7 @@
 //  GyroView.swift
 //  CoreMotion_Learning
 //
-//  Created by Mateus Martins Pires on 08/12/23.
+//  Created by Mateus Martins Pires on 04/02/24.
 //
 
 import SwiftUI

@@ -22,7 +22,7 @@ class SpriteKitGameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
     private var earthNode = EarthNode()
     private var earth = SK3DNode() // This is my Earth
     
-    private var nearestAsteroid: EarthNode?
+    private var nearestAsteroid: SK3DNode?
     
     // PROGRESS BAR
     private let progressBar = ProgressBar()
@@ -82,10 +82,10 @@ class SpriteKitGameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
         // Tutorial
         // tutorialScene()
 //        if AsteroidCount.count < 1 {
-//            addTutorial()
+            //addTutorial()
 //        }
         // Font
-        //customFont()
+        customFont()
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -143,8 +143,8 @@ class SpriteKitGameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
     }
     
     func moveCamera(){
-        velocityX = motionVM.rotationValueX * 7
-        velocityY = motionVM.rotationValueY * 7
+        velocityX = -motionVM.rotationRate.x * 10
+        velocityY = -motionVM.rotationRate.y * 10
         
         camera?.position.y -= velocityY
         camera?.position.x -= velocityX
@@ -180,7 +180,7 @@ class SpriteKitGameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
                 pointer.zRotation += 10
                 if isProgressOnScene == false {
                     // change the refenrence of nearest asteroid to know if player find an asteroid
-                        //nearestAsteroid = asteroid
+                        nearestAsteroid = earth
                     // add progressBar to scene
                     cameraNode?.addChild(progressBar)
                     isProgressOnScene = true
@@ -210,10 +210,10 @@ class SpriteKitGameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
                     progressBar.progress = 0 // deinit progress value
                 }
             }
-            if progressBar.completeProgress ==  true && earth == nearestAsteroid {
+            if progressBar.completeProgress ==  true {
                 //AsteroidCount.count += 1
                 //AsteroidCount.asteroids.removeAll { $0 == asteroid }
-                self.removeAllChildren() // evit problems
+                //self.removeAllChildren() // evit problems
                 self.changeScene = true
             }
         }
@@ -295,25 +295,6 @@ class SpriteKitGameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
         }
     }
     
-//    func countAsteroids() {
-//        // label count
-//        let numberOfAsteroids: Int = 3
-//        countLabel.text = "\(AsteroidCount.count)/\(numberOfAsteroids)"
-//        countLabel.fontName = "joystix"
-//        // Positions and add to scene
-//        counterBG.position = CGPoint.zero
-//        counterBG.position.y = frame.height * 0.42
-//        cameraNode?.addChild(counterBG)
-//        
-//        countLabel.position = CGPoint.zero
-//        countLabel.verticalAlignmentMode = .center
-//        countLabel.position.x = -30
-//        counterBG.addChild(countLabel)
-//        
-//        counterImage.position = CGPoint(x: .zero + 60, y: .zero + 5)
-//        counterBG.addChild(counterImage)
-//        
-//    }
     
     // show tutorial
     func tutorialScene() {
@@ -353,11 +334,14 @@ class SpriteKitGameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
     }
     
     func addTutorial() {
+        
+        // White Background
         let tutorialFrame = SKShapeNode(rectOf: CGSize(width: frame.width, height: frame.height))
         tutorialFrame.fillColor = .white
         tutorialFrame.alpha = 0
         tutorialFrame.zPosition = 100
         cameraNode?.addChild(tutorialFrame)
+        
         self.counterBG.alpha = 0
         self.cameraIndicator.alpha = 0
         // add asset tutorial
@@ -371,8 +355,8 @@ class SpriteKitGameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
                         SKTexture(imageNamed: "iPadSprite_frame3")]
         tutorialiPad.run(.repeatForever(.animate(with: moveiPad, timePerFrame: 0.3)))
         tutorialLabel.text = "Move iPad to Explore"
-        tutorialLabel.fontName = "joystix"
-        tutorialLabel.fontColor = .black
+        tutorialLabel.fontName = "Orbitron-SemiBold"
+        tutorialLabel.fontColor = .white
         // Position
         tutorialiPad.position = CGPoint(x: CGFloat.zero, y: CGFloat.zero)
         tutorialLabel.position = CGPoint(x: CGFloat.zero, y: 280)
@@ -380,7 +364,7 @@ class SpriteKitGameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
         // Add scene
         cameraNode?.addChild(tutorialLabel)
         cameraNode?.addChild(tutorialiPad)
-        cameraNode?.addChild(tutorialArrow)
+        //cameraNode?.addChild(tutorialArrow)
         
         // Start Animation
         let fadeAlphaAction = SKAction.fadeAlpha(to: 0.4, duration: 0.3)
@@ -410,7 +394,7 @@ class SpriteKitGameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
                                            ])
         let sequence = SKAction.sequence([fadeAlphaAction, wait, fadeOut, endTutorial])
         let sequenceImages = SKAction.sequence([wait, fadeOut])
-        tutorialLabel.run(sequenceImages)
+        //tutorialLabel.run(sequenceImages)
         tutorialiPad.run(sequenceImages)
         tutorialArrow.run(sequenceImages)
         tutorialArrow.run(moveAction)
@@ -468,6 +452,11 @@ class SpriteKitGameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
         
     }
     
+    func customFont(){
+            if let url = Bundle.main.url(forResource: "Orbiitron-SemiBold", withExtension: "ttf"){
+                CTFontManagerRegisterFontsForURL(url as CFURL, CTFontManagerScope.process, nil)
+            }
+        }
 }
 
 extension CGPoint {

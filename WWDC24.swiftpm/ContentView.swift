@@ -5,11 +5,11 @@ var width = UIScreen.main.bounds.width
 var height = UIScreen.main.bounds.height
 
 struct ContentView: View {
-    @State var bool: Bool? = true
+    //@State var bool: Bool = false
 
     
     var body: some View {
-        View8_FindEarth(changeScene: $bool)
+        View8_FindEarth()
             .preferredColorScheme(.dark)
     }
         
