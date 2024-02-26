@@ -2,7 +2,7 @@
 //  SwiftUIView.swift
 //  
 //
-//  Created by Mateus Martins Pires on 22/02/24.
+//  Created by Mateus Martins Pires on 05/02/24.
 //
 
 import SwiftUI
@@ -20,7 +20,7 @@ struct View13: View {
     // These variables are used on SceneView1 and SceneKitViewController to adjust some atributtes of SceneKitViewController
     @State var isRotatingEnabled: Bool? = .init(true)
     @State var isUserInteractionEnabled: Bool? = .init(true)
-    @State var scene: SCNScene? = .init(named: "Pangea4Scene.scn")
+    @State var scene: SCNScene? = .init(named: "IceageUVGeoOriginScene.scn")
     
     var degrees: [String] = ["0.5","1.0","1.5","2.0","2.5","3.0","3.5","4.0","4.5","5.0","5.5","6.0","6.5"]
 
@@ -34,7 +34,7 @@ struct View13: View {
                 
                 //Spacer()
                 
-                Text("20 thousand light years from Earth")
+                Text("Ice Age - 20 thousand years ago.")
                     .font(FontManager.customFont(font: .roboto, fontSize: .regular))
                 
                 Spacer()
@@ -92,7 +92,7 @@ struct View13: View {
                             timer?.invalidate()
                         }
                         .onTapGesture {
-                            navigateToNextView()
+                            //navigateToNextView()
                         }
                 }
                 .frame(maxWidth: .infinity, alignment: .bottomTrailing)
@@ -127,7 +127,7 @@ struct View13: View {
     func detailedBox() -> some View {
         GeometryReader { geometry in
             VStack {
-                Image("DetailedBox")
+                Image("DetailedBox_IceAge")
                     .resizable()
                     
             }

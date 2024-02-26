@@ -2,7 +2,7 @@
 //  SwiftUIView.swift
 //  
 //
-//  Created by Mateus Martins Pires on 16/01/24.
+//  Created by Mateus Martins Pires on 05/02/24.
 //
 
 import SwiftUI
@@ -19,7 +19,7 @@ struct View1: View {
                 
                 Spacer()
                 
-                HologramSpeaking(fullText1: "If Aliens really exist, they wouldn't see Earth as it is today. ", fullText2: "But what does that mean?", isEndAnimation: $isEndAnimation)
+                HologramSpeaking(fullText1: "If Aliens trully exist, they wouldn't see Earth as it is today. ", fullText2: "But what does that mean?", isEndAnimation: $isEndAnimation)
                     
                 
                 Spacer()
@@ -33,15 +33,14 @@ struct View1: View {
                 }
                 
             }
+            .background(content: {
+                Image("Background")
+            })
             .onAppear {
                 withAnimation(.spring(duration: 0.8)) {
                     widthProgress = 1.0
                 }
             }
-            //.background(.red)
-            .background(content: {
-                Image("Background")
-            })
         }
        
         .navigationBarBackButtonHidden(true)

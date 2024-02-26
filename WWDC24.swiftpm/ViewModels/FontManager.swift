@@ -2,7 +2,7 @@
 //  File.swift
 //  
 //
-//  Created by Mateus Martins Pires on 29/01/24.
+//  Created by Mateus Martins Pires on 05/02/24.
 //
 
 import Foundation
@@ -24,7 +24,7 @@ class FontManager {
         case title = 40
         case subtitle = 32
         case regular = 24
-        case caption = 16
+        case caption = 14
         
         var fontSizeText: CGFloat {
             return rawValue

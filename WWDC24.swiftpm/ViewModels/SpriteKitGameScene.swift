@@ -1,7 +1,3 @@
-//: A SpriteKit based Playground
-
-//import PlaygroundSupport
-
 
 import SpriteKit
 import SwiftUI
@@ -19,15 +15,14 @@ class SpriteKitGameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
     private var cameraIndicator = SKSpriteNode(imageNamed: "Scope")
     
     // EARTH
-    private var earthNode = EarthNode()
     private var earth = SK3DNode() // This is my Earth
     
     private var nearestAsteroid: SK3DNode?
     
     // PROGRESS BAR
     private let progressBar = ProgressBar()
-    private let pointerBox = SKSpriteNode(imageNamed: "PointerBox")
-    private let pointer = SKSpriteNode(imageNamed: "PointerSprite")
+    private let pointerBox = SKSpriteNode()
+    private let pointer = SKSpriteNode(texture: SKTexture(imageNamed: "Arrow"))
     
     // COUNT
     private let countLabel = SKLabelNode()
@@ -36,7 +31,9 @@ class SpriteKitGameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
     private let detectLabel = SKLabelNode(text: "keep pointed")
     
     // TUTORIAL
-    private let tutorialLabel = SKLabelNode(text: "Hello, welcome to asteroid hunting\n My name is João and I will help you")
+    private let tipTitleLabel = SKLabelNode(text: "")
+    private let ipadTipLabel = SKLabelNode(text: "Move your iPad to explore")
+    
     private let tutorialiPad = SKSpriteNode(imageNamed: "iPadSprite_frame1")
     private let tutorialArrow = SKSpriteNode(imageNamed: "tutorialArrowSprite")
     private let tutorialDialog: [String] = ["Hello, welcome to asteroid hunting\n My name is João and I will help you", "Move the iPad to move the telescope", "Center your aim on the asteroids to identify them"]
@@ -62,6 +59,7 @@ class SpriteKitGameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
         
         // Cenario Code
         starsBackground.zPosition = -1
+        starsBackground.position = CGPoint(x: 10 , y: 10 )
         addChild(starsBackground)
         
         // Camera
@@ -70,31 +68,22 @@ class SpriteKitGameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
         // Creating and positioning Earth.scn
         create3DEarth()
         
-        // ProgressBar
-        //progressBar.name = "circular"
-        // Pointer
-//        if AsteroidCount.count > 0 {
-//            addPointerWithTime()
-//        }
-        // Label
-        //countAsteroids()
+        // Creating tip Title Label
+        addTipTitle()
         
-        // Tutorial
-        // tutorialScene()
-//        if AsteroidCount.count < 1 {
-            //addTutorial()
-//        }
+        // Pointer
+        addPointerWithTime()
+
         // Font
-        customFont()
+        customFont(fontName: "RobotoMono-Regular")
+        customFont(fontName: "Orbitron-SemiBold")
     }
     
     override func update(_ currentTime: TimeInterval) {
         moveCamera()
         detectAsteroid(earthNode: earth)
-        if  pointer.parent != nil && !AsteroidCount.asteroids.isEmpty {
-            // verify if pointer is present on scene an has asteroids do hunt
-            rotatePointer(target: AsteroidCount.asteroids[0])
-        }
+        rotatePointer(target: earth)
+        
     }
     
     //MARK: My Functions --
@@ -102,6 +91,12 @@ class SpriteKitGameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
     // This function creates our 3D Earth in SpriteKit
     func create3DEarth() {
         let sceneKitEarth = SCNScene(named: "Pangea4Scene.scn")
+        
+        // Define a rotação desejada em radianos
+            let rotationAngle: Float = Float.pi / 2 // Por exemplo, uma rotação de 45 graus
+            
+            // Aplica a rotação ao nó raiz da cena
+            sceneKitEarth?.rootNode.eulerAngles.y = rotationAngle
         
         earth.scnScene = sceneKitEarth
         
@@ -113,13 +108,20 @@ class SpriteKitGameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
         self.addChild(earth)
     }
     
+    func rotateEarth() {
+        let rotationAction = SKAction.rotate(byAngle: CGFloat.pi * 2, duration: 10) // Um ciclo completo em 10 segundos
+        
+        let repeatAction = SKAction.repeatForever(rotationAction)
+        
+        earth.run(repeatAction)
+    }
+    
     func setupCamera() {
         cameraNode = SKCameraNode()
         self.camera = cameraNode
         self.addChild(cameraNode!)
         cameraNode?.zPosition = 2
-        
-        
+                
         // Add a scope to guide
         cameraIndicator.name = "cameraIndicator"
         cameraIndicator.zPosition = 2
@@ -131,20 +133,33 @@ class SpriteKitGameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
         let cameraHeightBounds = self.frame.height / 2
         
         // Converter os limites globais para o sistema de coordenadas local da cena
-        let bounds = self.calculateAccumulatedFrame()
-        let widthBounds = bounds.width / 2 - cameraWidthBounds
-        let heightBounds = bounds.height / 2 - cameraHeightBounds
+        let bounds = starsBackground.calculateAccumulatedFrame()
+        let widthBounds = bounds.width / 2.5 - cameraWidthBounds
+        let heightBounds = bounds.height / 2.5 - cameraHeightBounds
         
         let cameraWidthConstraint = SKConstraint.positionX(SKRange(lowerLimit: -widthBounds, upperLimit: widthBounds))
         let cameraHeightConstraint = SKConstraint.positionY(SKRange(lowerLimit: -heightBounds, upperLimit: heightBounds))
         
         self.camera?.constraints = [cameraWidthConstraint, cameraHeightConstraint]
         cameraIndicator.constraints = [cameraWidthConstraint, cameraHeightConstraint]
+        
+        
+        
+//        let cameraWidthBounds = self.frame.width/2
+//        let widthBounds = self.calculateAccumulatedFrame().width / 2 - cameraWidthBounds
+//        let cameraWidthConstraint = SKConstraint.positionX(.init(lowerLimit: -widthBounds, upperLimit: widthBounds))
+//        
+//        let cameraHeightBounds = self.calculateAccumulatedFrame().height/2
+//        let heightBounds = self.calculateAccumulatedFrame().height/2 - cameraHeightBounds
+//        let cameraHeightConstraint = SKConstraint.positionY(.init(lowerLimit: -cameraHeightBounds, upperLimit: cameraHeightBounds))
+//        
+//        self.camera?.constraints = [cameraWidthConstraint, cameraHeightConstraint]
+
     }
     
     func moveCamera(){
-        velocityX = -motionVM.rotationRate.x * 10
-        velocityY = -motionVM.rotationRate.y * 10
+        velocityX = motionVM.rotationRate.x * 13
+        velocityY = motionVM.rotationRate.y * 13
         
         camera?.position.y -= velocityY
         camera?.position.x -= velocityX
@@ -234,11 +249,17 @@ class SpriteKitGameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
         pointerBox.alpha = 0.0
         // Arrow - pointer
         pointer.zPosition = 100
+        
+        let symbol = UIImage(systemName: "location")?.withTintColor(.blue)
+        //pointer.texture = SKTexture(image: symbol!)
+        let square = UIImage(systemName: "square")?.withTintColor(.blue)
+        //pointerBox.texture = SKTexture(image: square!)
+        
         // Animation
         pointerBox.run(.fadeAlpha(to: 0.7, duration: 0.3))
         // Add Nodes
-        pointerBox.addChild(pointer)
-        cameraNode?.addChild(pointerBox)
+        //pointerBox.addChild(pointer)
+        cameraNode?.addChild(pointer)
         var scaleWidth: CGFloat = 0
         var scaleHeight: CGFloat = 0
         var tipScopePosition: CGPoint = CGPoint.zero
@@ -250,25 +271,25 @@ class SpriteKitGameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
             scaleHeight = 180
             tipScopePosition = CGPoint(x: .zero, y: -size.height * 0.35)
         }
-        pointerBox.position = tipScopePosition
+        pointer.position = tipScopePosition
         // Set the desired size
         let desiredSize = CGSize(width: scaleWidth, height: scaleHeight)
         // Calculate scale ratios to fit the image to the desired size
-        let originalSize = pointerBox.size
+        let originalSize = pointer.size
         let scaleX = desiredSize.width / originalSize.width
         let scaleY = desiredSize.height / originalSize.height
         // Apply the minimum scale to fit the image to the desired size without distortion
         let minScale = min(scaleX, scaleY)
         // Only Scale if isnt 12 polegadas
         if self.size.width <= 1330 {
-            pointerBox.scale(to: CGSize(width: originalSize.width * minScale, height: originalSize.height * minScale))
+            //pointer.scale(to: CGSize(width: originalSize.width * minScale, height: originalSize.height * minScale))
            // pointer.scale(to: CGSize(width: originalSize.width * minScale, height: originalSize.height * minScale))
             
         }
         
     }
     
-    func rotatePointer(target: SKNode) {
+    func rotatePointer(target: SK3DNode) {
         // using camera by referece because pointer dont move, only camera
         let dx = target.position.x - (camera?.position.x ?? 0)
         let dy = target.position.y - (camera?.position.y ?? 0)
@@ -286,7 +307,7 @@ class SpriteKitGameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
         // Start a timer so know if player needs help to find an asteroid
         var time: Int = 0
         timeOnScene = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
-            if time == 10 {
+            if time == 3 {
                 self.addPointer()
                 timer.invalidate()
             }
@@ -298,13 +319,13 @@ class SpriteKitGameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
     
     // show tutorial
     func tutorialScene() {
-        tutorialLabel.text = tutorialDialog[tutorialIndex]
+        tipTitleLabel.text = tutorialDialog[tutorialIndex]
         tutorialiPad.name = "tutorialFrame"
         tutorialiPad.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         tutorialiPad.position = CGPoint(x: 0, y: -size.height / 2 + 80)
         addChild(tutorialiPad)
-        tutorialLabel.position = CGPoint(x: 0, y: 0)
-        tutorialLabel.fontColor = .black
+        tipTitleLabel.position = CGPoint(x: 0, y: 0)
+        tipTitleLabel.fontColor = .black
    
     }
     
@@ -316,10 +337,10 @@ class SpriteKitGameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
      
         if tutorialIndex < 3 {
             let attLabel = SKAction.run {
-                self.tutorialLabel.text = self.tutorialDialog[self.tutorialIndex]
+                self.tipTitleLabel.text = self.tutorialDialog[self.tutorialIndex]
             }
             let sequence = SKAction.sequence([fadeOut, attLabel, fadeIn])
-            tutorialLabel.run(sequence)
+            tipTitleLabel.run(sequence)
             
         } else {
             let removeAction = SKAction.run {
@@ -333,6 +354,44 @@ class SpriteKitGameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
         }
     }
     
+    func addTipTitle() {
+        tipTitleLabel.text = "Locate Earth with telescope"
+        tipTitleLabel.fontName = "Orbitron-SemiBold"
+        tipTitleLabel.position = CGPoint(x: CGFloat.zero, y: 280)
+        tipTitleLabel.zPosition = 110
+        
+        ipadTipLabel.fontName = "RobotoMono-Regular"
+        ipadTipLabel.position = CGPoint(x: CGFloat.zero, y: 230)
+        ipadTipLabel.fontSize = 24
+        ipadTipLabel.zPosition = 110
+        
+        cameraNode?.addChild(tipTitleLabel)
+        cameraNode?.addChild(ipadTipLabel)
+        
+        startTypingAnimation(label: ipadTipLabel)
+        
+    }
+    
+    func startTypingAnimation(label: SKLabelNode) {
+        var index = 0
+        let initialDelay = 1.0 // Segundos de atraso antes de começar a segunda string
+        var displayedText = ""
+        guard let fullText = label.text else { return }
+        
+        let timer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { timer in
+            guard index < fullText.count else {
+                timer.invalidate()
+                return
+            }
+            displayedText.append(fullText[fullText.index(fullText.startIndex, offsetBy: index)])
+            label.text = displayedText
+            index += 1
+        }
+        // Armazene o timer para que possa ser interrompido posteriormente, se necessário
+        // Por exemplo, você pode armazená-lo em uma propriedade da classe.
+        //self.typingTimer = timer
+    }
+    
     func addTutorial() {
         
         // White Background
@@ -344,25 +403,23 @@ class SpriteKitGameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
         
         self.counterBG.alpha = 0
         self.cameraIndicator.alpha = 0
+        
         // add asset tutorial
         tutorialiPad.zPosition = 110
         tutorialArrow.zPosition = 110
-        tutorialLabel.zPosition = 110
+        
         // Animate ipad
         let moveiPad = [SKTexture(imageNamed: "iPadSprite_frame1"),
                         SKTexture(imageNamed: "iPadSprite_frame2"),
                         SKTexture(imageNamed: "iPadSprite_frame1"),
                         SKTexture(imageNamed: "iPadSprite_frame3")]
         tutorialiPad.run(.repeatForever(.animate(with: moveiPad, timePerFrame: 0.3)))
-        tutorialLabel.text = "Move iPad to Explore"
-        tutorialLabel.fontName = "Orbitron-SemiBold"
-        tutorialLabel.fontColor = .white
+        
+        tipTitleLabel.fontColor = .white
         // Position
         tutorialiPad.position = CGPoint(x: CGFloat.zero, y: CGFloat.zero)
-        tutorialLabel.position = CGPoint(x: CGFloat.zero, y: 280)
         tutorialArrow.position = CGPoint(x: CGFloat.zero + 20, y: -280)
         // Add scene
-        cameraNode?.addChild(tutorialLabel)
         cameraNode?.addChild(tutorialiPad)
         //cameraNode?.addChild(tutorialArrow)
         
@@ -452,8 +509,8 @@ class SpriteKitGameScene: SKScene, SKPhysicsContactDelegate, ObservableObject {
         
     }
     
-    func customFont(){
-            if let url = Bundle.main.url(forResource: "Orbiitron-SemiBold", withExtension: "ttf"){
+    func customFont(fontName: String){
+            if let url = Bundle.main.url(forResource: fontName, withExtension: "ttf"){
                 CTFontManagerRegisterFontsForURL(url as CFURL, CTFontManagerScope.process, nil)
             }
         }

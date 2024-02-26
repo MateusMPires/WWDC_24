@@ -2,8 +2,7 @@
 //  File.swift
 //  
 //
-//  Created by Mateus Martins Pires on 01/02/24.
-//  View08_FindEarth.swift
+//  Created by Mateus Martins Pires on 05/02/24.
 //
 //
 //
@@ -22,7 +21,7 @@ struct View8_FindEarth: View {
             ZStack{
                 Color.blue
                     .ignoresSafeArea()
-                SpriteView(scene: scene, debugOptions: [.showsFPS, .showsNodeCount])
+                SpriteView(scene: scene)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .ignoresSafeArea()
             }

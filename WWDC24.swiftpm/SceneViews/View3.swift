@@ -2,7 +2,7 @@
 //  SwiftUIView.swift
 //  
 //
-//  Created by Mateus Martins Pires on 18/01/24.
+//  Created by Mateus Martins Pires on 05/02/24.
 //
 
 import SwiftUI
@@ -16,7 +16,7 @@ struct View3: View {
         NavigationStack {
             VStack {
                 
-                HologramSpeaking(fullText1: "One light-year  is the distance that the light travels in one year.", fullText2: " That's 6 trillion miles!", isEndAnimation: $isEndAnimation)
+                HologramSpeaking(fullText1: "One light-year is the distance that the light travels in one year.", fullText2: " This means we are seeing an object as it was one year ago.", isEndAnimation: $isEndAnimation)
                 
                 
                 Spacer()
@@ -44,6 +44,7 @@ struct View3: View {
                             HStack {
                                 //if isEndAnimation {
                                     MovingLightLine()
+                                    .hidden()
                                 //}
                                 
                                 Spacer()
@@ -67,13 +68,13 @@ struct View3: View {
                             .scaledToFit()
                             .frame(width: width * 0.63)
                             .padding()
-                        
-                        Text("4.2 light-years")
+                        Spacer()
+                        Text("4 light-years away")
                             .font(FontManager.customFont(font: .orbitron, fontSize: .regular))
                             .font(.title)
-                        Spacer()
-                        Text("Nearly 24 trillion miles!")
-                            .font(FontManager.customFont(font: .orbitron, fontSize: .caption))
+                        Text("4 years in the past")
+                            .font(FontManager.customFont(font: .roboto, fontSize: .caption))
+                            .padding(.vertical, 1)
                     }
                     .frame(width: width * 0.63)
                     .padding(EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 0))

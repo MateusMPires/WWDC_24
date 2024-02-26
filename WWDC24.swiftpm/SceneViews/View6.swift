@@ -2,7 +2,7 @@
 //  SwiftUIView.swift
 //  
 //
-//  Created by Mateus Martins Pires on 23/01/24.
+//  Created by Mateus Martins Pires on 05/02/24.
 //
 
 import SwiftUI
@@ -22,19 +22,16 @@ struct View6: View {
                 
                 Spacer()
                 
-                Image("UniverseMap")
+                Image("UniverseMapYellow")
                     .resizable()
-                //.scaledToFit()
-                //.aspectRatio(contentMode: .fit)
                     .frame(width: width * 0.8, height: height * 0.8)
                     .scaleEffect(1.5)
-                //.background(Color.red)
                     .overlay {
                         NavigationLink(destination: View7()) {
                             ExploreButton(buttonColor: .yellow, buttonTitle: "View from here")
                         }
                         .scaleEffect(0.7)
-                        .offset(x: width * 0.35, y: height * 0.107)
+                        .offset(x: width * 0.36, y: height * 0.107)
                     }
                 
                 

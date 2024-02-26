@@ -2,7 +2,7 @@
 //  SwiftUIView.swift
 //  
 //
-//  Created by Mateus Martins Pires on 23/01/24.
+//  Created by Mateus Martins Pires on 05/02/24.
 //
 
 import SwiftUI
@@ -17,7 +17,7 @@ struct View4: View {
                 
                 Spacer()
                 
-                HologramSpeaking(fullText1: "This light effect would be the same for aliens living in other planets.", fullText2: "", isEndAnimation: $isEndAnimation)
+                HologramSpeaking(fullText1: "If we could see Earth from other planets, then we would see it in the past.", fullText2: "", isEndAnimation: $isEndAnimation)
                 
                 Spacer()
                 

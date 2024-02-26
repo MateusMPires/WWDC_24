@@ -2,7 +2,7 @@
 //  SwiftUIView.swift
 //  
 //
-//  Created by Mateus Martins Pires on 18/01/24.
+//  Created by Mateus Martins Pires on 05/02/24.
 //
 
 import SwiftUI
@@ -27,7 +27,7 @@ struct MovingLightLine: View {
                 
             }
             .onAppear {
-                withAnimation(.linear(duration: 3.0)) {
+                withAnimation(.linear(duration: 2.5)) {
                     progress = 0.0
                 }
             }

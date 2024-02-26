@@ -2,7 +2,7 @@
 //  SwiftUIView.swift
 //  
 //
-//  Created by Mateus Martins Pires on 18/01/24.
+//  Created by Mateus Martins Pires on 05/02/24.
 //
 
 import SwiftUI
@@ -22,16 +22,13 @@ struct HologramSpeaking: View {
         }
     
     var body: some View {
-            
-            //RectShape()
-            
+                        
             HStack {
                 Image("Hologram")
                     .resizable()
                     .scaledToFill()
                     .frame(width: width * 0.08, height: width * 0.1)
                     .padding()
-                                        //.background(Color("Cyan").opacity(0.))
                 
                 Text(displayedText)
                     .font(FontManager.customFont(font: .roboto, fontSize: .regular))
@@ -40,21 +37,13 @@ struct HologramSpeaking: View {
                     .onAppear {
                         startTypingAnimation()
                     }
-//                    .onChange(of: fullText1) { newValue in
-//                        //DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-//                        displayedText = ""
-//                        startTypingAnimation()
-//                        //}
-//                    }
             }
             .overlay {
                 Image("TextBalloon")
                     .resizable()
                     .frame(width: width * 0.75, height: width * 0.16)
-                    //.frame(width: width * 0.75 * widthProgress, height: height * 0.16 * widthProgress)
             }
             .padding()
-        
     }
     
     func startTypingAnimation() {

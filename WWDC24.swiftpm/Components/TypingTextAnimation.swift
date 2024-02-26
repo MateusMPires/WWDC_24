@@ -2,7 +2,7 @@
 //  File.swift
 //  
 //
-//  Created by Mateus Martins Pires on 16/01/24.
+//  Created by Mateus Martins Pires on 05/02/24.
 //
 
 import Foundation
@@ -17,11 +17,7 @@ struct TypingTextAnimation: View {
     
     var body: some View {
         
-//        let cfURL = Bundle.main.url(forResource: "RobotoMono-Regular", withExtension: "ttf")! as CFURL
-//            let _ = CTFontManagerRegisterFontsForURL(cfURL, CTFontManagerScope.process, nil)
-        
         Text(displayedText)
-            //.font(.custom("RobotoMono-Regular", size: 24))
             .padding()
             .onAppear {
                 startTypingAnimation()

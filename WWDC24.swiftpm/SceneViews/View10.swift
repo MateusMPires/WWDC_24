@@ -2,7 +2,7 @@
 //  SwiftUIView.swift
 //  
 //
-//  Created by Mateus Martins Pires on 04/02/24.
+//  Created by Mateus Martins Pires on 05/02/24.
 //
 
 import SwiftUI
@@ -33,9 +33,8 @@ struct View10: View {
                     .font(FontManager.customFont(font: .orbitron, fontSize: .title))
                     .padding()
                 
-                //Spacer()
                 
-                Text("230 million light years from Earth")
+                Text("Pangea - 230 million years ago.")
                     .font(FontManager.customFont(font: .roboto, fontSize: .regular))
                 
                 Spacer()
@@ -47,16 +46,9 @@ struct View10: View {
                         .overlay {
                             SceneKitViewController(scene: $scene, isInteractionEnabled: $isUserInteractionEnabled, isRotationEnabled: $isRotatingEnabled)
                                 .frame(width: width * 0.3, height: height * 0.4)
-                                //.background(Color.blue)
-
-                                //.rotationEffect(.degrees(isRotating ? 360 : 0), anchor: .center)
                         }
                         .frame(width: width * 0.65)
-                        //.background(Color.green)
 
-                        
-                    
-                    //Spacer()
                             VStack {
                                 Rectangle()
                                     .frame(width: width * 0.2, height: height * 0.5)
@@ -65,7 +57,6 @@ struct View10: View {
                                     .overlay {
                                         detailedBox()
                                             .frame(width: width * 0.26 * widthProgress, height: height * 0.5 * widthProgress)
-                                            //.background(Color.green)
                                             .scaleEffect(1.1)
                                     }
                                 
@@ -84,8 +75,6 @@ struct View10: View {
                     
                     
                 }
-                //.background(Color.red)
-
                 Spacer()
                 
                 VStack {
@@ -101,7 +90,7 @@ struct View10: View {
                             timer?.invalidate()
                         }
                         .onTapGesture {
-                            navigateToNextView()
+                            //navigateToNextView()
                         }
                 }
                 .frame(maxWidth: .infinity, alignment: .bottomTrailing)
@@ -169,11 +158,6 @@ extension View10 {
                 }
             }
             .frame(width: proxy.size.width, height: proxy.size.height)
-//            .rotationEffect(.degrees(clampRotationValue(
-//                viewModelCM.rotationValueZ <= 0 ? -viewModelCM.rotationValueZ / 180 : 0.5,
-//                minRotation: 0, // Substitua pelo valor mínimo desejado
-//                maxRotation: 55   // Substitua pelo valor máximo desejado
-//            )))
         }
     }
 }

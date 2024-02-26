@@ -2,7 +2,7 @@
 //  GyroView.swift
 //  CoreMotion_Learning
 //
-//  Created by Mateus Martins Pires on 04/02/24.
+//  Created by Mateus Martins Pires on 05/02/24.
 //
 
 import SwiftUI
@@ -20,7 +20,7 @@ struct ZoomView: View {
     
     // These variables are used on SceneView1 and SceneKitViewController to adjust some atributtes of SceneKitViewController
     @State var isUserInteractionEnabled: Bool? = .init(false)
-    @State var scene: SCNScene? = .init(named: "Pangea4Scene.scn")
+    @State var scene: SCNScene? = .init(named: "IceageUVGeoOriginScene.scn")
     @State var isRotatingEnabled: Bool? = .init(true)
     
     var degrees: [String] = ["0.5","1.0","1.5","2.0","2.5","3.0","3.5","4.0","4.5","5.0","5.5","6.0","6.5"]
@@ -38,18 +38,15 @@ struct ZoomView: View {
                 Text("Earth detected!")
                     .font(FontManager.customFont(font: .orbitron, fontSize: .title))
                     .padding()
-                    //.font(.title)
                           
-                Text("Rotate your device to adjust your telescope's zoom and focus")
+                Text("Rotate your device to the right to adjust the telescope zoom.")
                         .font(FontManager.customFont(font: .roboto, fontSize: .regular))
                 
                 ZStack(alignment: .center) {
                     
                     SceneKitViewController(scene: $scene, isInteractionEnabled: $isUserInteractionEnabled, isRotationEnabled: $isRotatingEnabled)
                         .frame(height: 350)
-                        //.background(Color.red)
                         .scaleEffect(clampZoomValue(-viewModelCM.rotationValueZ * 0.00009), anchor: .center)
-                        .blur(radius: clampBlurValue(-viewModelCM.rotationValueZ * 0.00009, minBlur: 3, maxBlur: 0))
                         .onChange(of: clampZoomValue(-viewModelCM.rotationValueZ * 0.00009)) { newValue in
                                                 if newValue == maxZoom {
                                                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -70,9 +67,10 @@ struct ZoomView: View {
                 Spacer()
                 
                 ArrowButton(destination: View12())
+                    .hidden()
             }
             .navigationDestination(isPresented: $isZoomMaxed) {
-                View9()
+                View12()
             }
             .background {
                 Image("StarsBackground")
@@ -94,7 +92,7 @@ extension ZoomView {
             ZStack(alignment: .center) {
                 
                 Circle()
-                    .stroke(isRingSelected ? Color.mint.opacity(1) : Color.gray.opacity(0.3), lineWidth: 4)
+                    .stroke(Color.blue.opacity(0.3), lineWidth: 4)
                     .frame(width: proxy.size.width * 0.37)
                 
                 ForEach(0..<60, id: \.self) { i in
@@ -114,8 +112,8 @@ extension ZoomView {
             .frame(width: proxy.size.width, height: proxy.size.height)
             .rotationEffect(.degrees(clampRotationValue(
                 viewModelCM.rotationValueZ <= 0 ? -viewModelCM.rotationValueZ / 180 : 0.5,
-                minRotation: 0, // Substitua pelo valor mínimo desejado
-                maxRotation: 55   // Substitua pelo valor máximo desejado
+                minRotation: 0,
+                maxRotation: 55
             )))
         }
     }
@@ -128,18 +126,15 @@ extension ZoomView {
         }
     }
     
-    // Garante que o valor do zoom esteja dentro de limites específicos
     func clampZoomValue(_ value: CGFloat) -> CGFloat {
         return max(min(value, maxZoom), minZoom)
     }
     
-    // Garante que o valor da rotação esteja dentro de limites específicos
     func clampRotationValue(_ value: Double, minRotation: Double, maxRotation: Double) -> Double {
         return max(min(value, maxRotation), minRotation)
     }
     
-    // Garante que o valor da blur esteja dentro de limites específicos
     func clampBlurValue(_ value: Double, minBlur: Double, maxBlur: Double) -> Double {
-        return max(min(value, maxBlur), minBlur)
+        return max(min(value, minBlur), maxBlur)
     }
 }

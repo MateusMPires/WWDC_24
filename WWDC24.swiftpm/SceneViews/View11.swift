@@ -2,7 +2,7 @@
 //  SwiftUIView.swift
 //  
 //
-//  Created by Mateus Martins Pires on 22/02/24.
+//  Created by Mateus Martins Pires on 05/02/24.
 //
 
 import SwiftUI
@@ -14,14 +14,14 @@ struct View11: View {
         NavigationStack {
             VStack {
                 
-                Text("Let's take a look from another point")
+                Text("Let's take a look from a closer point.")
                     .font(FontManager.customFont(font: .orbitron, fontSize: .title))
                 //.background(Color.blue)
                     .padding()
                 
                 Spacer()
                 
-                Image("UniverseMap")
+                Image("UniverseMapBlue")
                     .resizable()
                 //.scaledToFit()
                 //.aspectRatio(contentMode: .fit)
@@ -30,10 +30,10 @@ struct View11: View {
                 //.background(Color.red)
                     .overlay {
                         NavigationLink(destination: ZoomView()) {
-                            ExploreButton(buttonColor: .blue, buttonTitle: "View from here")
+                            ExploreButton(buttonColor: .cyan, buttonTitle: "View from here")
                         }
                         .scaleEffect(0.7)
-                        .offset(x: width * 0.35, y: height * 0.107)
+                        .offset(x: width * 0.165, y: height * -0.17)
                     }
                 
                 

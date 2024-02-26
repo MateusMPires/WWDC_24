@@ -8,27 +8,26 @@ import PackageDescription
 import AppleProductTypes
 
 let package = Package(
-    name: "WWDC24",
+    name: "Light-Years",
     platforms: [
         .iOS("16.0")
     ],
     products: [
         .iOSApplication(
-            name: "WWDC24",
+            name: "Light-Years",
             targets: ["AppModule"],
             bundleIdentifier: "Mateus.SSC24",
             teamIdentifier: "GTH77F75XH",
             displayVersion: "1.0",
             bundleVersion: "1",
-            appIcon: .placeholder(icon: .images),
+            appIcon: .asset("AppIcon"),
             accentColor: .presetColor(.blue),
             supportedDeviceFamilies: [
                 .pad,
                 .phone
             ],
             supportedInterfaceOrientations: [
-                .landscapeRight,
-                .landscapeLeft
+                .landscapeRight
             ]
         )
     ],

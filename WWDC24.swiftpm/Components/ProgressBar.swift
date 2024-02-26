@@ -9,7 +9,7 @@ class ProgressBar: SKNode {
     
     // progress values
     private let maxValue: CGFloat = 5
-    private let width: CGFloat = 12
+    private let width: CGFloat = 4
     var completeProgress: Bool = false
     var progress: CGFloat  {
         didSet {
@@ -46,9 +46,9 @@ class ProgressBar: SKNode {
         // add background as a chield of circular bar to avoid the alpha configuration on circularBar
         circularBar.addChild(backgroundNode)
         // circular progres config
-        circularBar.lineWidth = 12
-        circularBar.strokeColor = SKColor.green
-        circularBar.alpha = 1
+        circularBar.lineWidth = 4
+        circularBar.strokeColor = SKColor.white
+        circularBar.alpha = 0.7
         addChild(circularBar)
     }
     

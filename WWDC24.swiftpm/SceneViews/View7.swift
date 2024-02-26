@@ -2,7 +2,7 @@
 //  SwiftUIView.swift
 //  
 //
-//  Created by Mateus Martins Pires on 27/01/24.
+//  Created by Mateus Martins Pires on 05/02/24.
 //
 
 import SwiftUI
@@ -18,7 +18,7 @@ struct View7: View {
                     
                     //Spacer()
                     
-                    Text("230 million light years from Earth")
+                    Text("230 million light years away from Earth.")
                         .font(FontManager.customFont(font: .roboto, fontSize: .regular))
                     
                     Spacer()
@@ -34,8 +34,8 @@ struct View7: View {
                         
                     Spacer()
                     
-                            NavigationLink(destination: View9()) {
-                                ExploreButton(buttonTitle: "Take telescope")
+                            NavigationLink(destination: View8_FindEarth()) {
+                                ExploreButton(buttonTitle: "See from here")
                             }
                             //.offset(x: width * 0.3, y: -height * 0.5)
                             .frame(width: width * 0.2, height: height * 0.1, alignment: .center)

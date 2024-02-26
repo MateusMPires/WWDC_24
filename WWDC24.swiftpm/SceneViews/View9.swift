@@ -2,7 +2,7 @@
 //  SwiftUIView.swift
 //  
 //
-//  Created by Mateus Martins Pires on 01/02/24.
+//  Created by Mateus Martins Pires on 05/02/24.
 //
 
 import SwiftUI
@@ -28,9 +28,9 @@ struct View9: View {
         NavigationStack {
             VStack {
                 if changeBalloon {
-                    HologramSpeaking(fullText1: "It appears that they would see our Earth on Pagea! ", fullText2: "It means that for them, dinosaurs are still alive.", isEndAnimation: $isEndAnimation)
+                    HologramSpeaking(fullText1: "It seems like we would see Earth in the Pangea era! ", fullText2: "At that time, dinosaurs were still alive.", isEndAnimation: $isEndAnimation)
                 } else {
-                    HologramSpeaking(fullText1: "Wow! So that's how aliens in NCG-015 exoplanet would see Earth? ", fullText2: "That`s awesome.", isEndAnimation: $isEndAnimation)
+                    HologramSpeaking(fullText1: "Wow! So that's how we would see Earth from the exoplanet NCG-015? ", fullText2: "That`s awesome.", isEndAnimation: $isEndAnimation)
                 }
                 
                 Spacer()

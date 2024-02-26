@@ -2,7 +2,7 @@
 //  SwiftUIView.swift
 //  
 //
-//  Created by Mateus Martins Pires on 17/01/24.
+//  Created by Mateus Martins Pires on 05/02/24.
 //
 
 import SwiftUI
@@ -15,7 +15,7 @@ struct View2: View {
         NavigationStack {
             VStack {
                 
-                HologramSpeaking(fullText1: "The light that left a star or a planet has to travel several distances to reach our eyes and telescopes.", fullText2: "", isEndAnimation: $isEndAnimation)
+                HologramSpeaking(fullText1: "The light from a star or planet travels across intergalactic distances to reach our eyes and telescopes.", fullText2: "", isEndAnimation: $isEndAnimation)
                     .padding()
                 
                 
